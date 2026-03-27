@@ -1,0 +1,105 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const imgLogo = "/images/logo.svg";
+---
+
+<Layout title="About — Gabriela Biscáro">
+  <div class="w-full overflow-x-hidden">
+
+    <!-- Hero illustration -->
+    <div class="relative w-full bg-beige h-[220px] lg:h-[525px]">
+      <nav class="relative z-10 flex items-center justify-between px-6 pt-6 lg:px-[141px] lg:pt-[35px]">
+        <a href="/"><img src={imgLogo} alt="Logo" style="width:40px;height:49px;object-fit:contain;" /></a>
+        <div class="hidden lg:flex gap-[38px] items-center">
+          <a href="/work" class="font-bold text-[16px] text-pink uppercase">Work</a>
+          <a href="/personal-work" class="font-bold text-[16px] text-pink uppercase">Personal Work</a>
+          <div class="flex flex-col items-start">
+            <a href="/about" class="font-bold text-[16px] text-pink uppercase">About</a>
+            <img src="/images/wave-about.svg" alt="" class="mt-1 w-full" />
+          </div>
+        </div>
+        <button id="nav-toggle" class="lg:hidden text-pink p-2" aria-label="Open menu">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+            <line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/>
+          </svg>
+        </button>
+      </nav>
+      <img src="/images/about-hero.png" alt="" class="absolute top-0 left-0 h-full object-contain object-left" />
+    </div>
+
+    <!-- Mobile menu -->
+    <div id="mobile-menu" class="hidden fixed inset-0 z-50 bg-bordoux flex-col items-center justify-center gap-10">
+      <button id="nav-close" class="absolute top-6 right-6 text-beige text-[32px] leading-none font-bold">✕</button>
+      <a href="/work" class="font-bold text-[24px] text-beige uppercase">Work</a>
+      <a href="/personal-work" class="font-bold text-[24px] text-beige uppercase">Personal Work</a>
+      <a href="/about" class="font-bold text-[24px] text-beige uppercase">About</a>
+    </div>
+
+    <!-- Bio section -->
+    <div class="flex flex-col lg:flex-row lg:justify-between px-6 py-10 lg:px-[141px] lg:py-[79px] gap-10 lg:gap-0">
+
+      <!-- Left: bio text -->
+      <div class="flex flex-col gap-[24px] lg:max-w-[572px]">
+        <p class="font-normal text-[14px] text-gray">Oh, hello everyone!</p>
+        <h1 class="font-extrabold text-[32px] lg:text-[48px] text-bordoux leading-tight">My name is Gabriela Biscáro and I'm Brazilian Illustrator</h1>
+        <div class="flex flex-col gap-[16px] font-normal text-[16px] text-gray leading-relaxed">
+          <p>I have multiple nicknames, but everybody calls me Bibi.</p>
+          <p>My work is characterized by saturated and contrasting colors, organic forms, and characters representing a dream Universe, where they can be and feel anything they want.</p>
+          <p>Overall, I enjoy working with and exploring various mediums, including digital paint, collage, embroidery, plasticine, and my personal favorite, traditional media such as watercolor, gouache, and acrylic paint. I'm not afraid of experimenting!</p>
+          <p>Often, I'm inspired by my own emotions and personal struggles. However, other things also inspire me, such as nature, music, and Japan. And my dream is to become a Children's Book Illustrator.</p>
+          <p>Initially, I started my career as a UX Designer, but art has always been my passion. Speaking of art, I was a self-taught artist, but I graduated in a Master's in Editorial and Advertising Illustration at LABASAD Design School, which excites me!</p>
+        </div>
+      </div>
+
+      <!-- Right: photo + things I love -->
+      <div class="flex flex-col gap-[24px] lg:w-[494px]">
+        <img
+          src="/images/about-photo.png"
+          alt="Gabriela Biscáro"
+          class="w-full object-cover rounded-[12px]"
+          style="height: 340px; object-position: top;"
+        />
+        <div class="flex flex-col gap-[8px]">
+          <p class="font-bold text-[14px] text-bordoux uppercase tracking-wide">Some things I love:</p>
+          <p class="font-normal text-[16px] text-gray leading-relaxed">The color blue, but also red; Cook and try new and different vegan foods; Watch cooking competition shows; K-POP music videos; Bus commute; Watch &amp; read My Brilliant Friend; My dog (Batatinha, or Little Potato); Hear the words I Love You; Find new things to love &lt;3</p>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Footer -->
+    <footer class="relative w-full overflow-hidden mt-0 lg:mt-[79px] lg:h-[968px]">
+      <img src="/images/footer-background.png" alt="" class="absolute inset-0 w-full h-full object-cover" />
+      <img src="/images/arco.svg" alt="" class="hidden lg:block absolute top-[74px] left-[200px] w-[175px] h-[172px] -rotate-[165deg]" />
+      <img src="/images/arco.svg" alt="" class="hidden lg:block absolute top-[535px] left-[600px] w-[175px] h-[172px]" />
+      <img src="/images/Flor-Rosa.svg" alt="" class="hidden lg:block absolute top-[473px] left-0 w-[308px] h-[308px] -scale-y-100" />
+      <img src="/images/Flor-Vermelha.svg" alt="" class="hidden lg:block absolute top-[-154px] left-[564px] w-[308px] h-[308px]" />
+      <img src="/images/Flor-Roxa.svg" alt="" class="hidden lg:block absolute top-[664px] left-[1063px] w-[218px] h-[162px]" />
+      <img src="/images/Estrelinha-vermelha.svg" alt="" class="hidden lg:block absolute top-[454px] left-[791px] w-[213px] h-[230px] rotate-[-16.12deg]" />
+      <img src="/images/Estrelinha-amarela.svg" alt="" class="hidden lg:block absolute top-[20px] left-[1190px] w-[213px] h-[230px] rotate-[-16.12deg]" />
+      <img src="/images/Bonequinho-azul.svg" alt="" class="hidden lg:block absolute top-[233px] left-[907px] w-[361px] h-[327px]" />
+      <img src="/images/Bonequinho-verde.svg" alt="" class="hidden lg:block absolute top-[824px] left-[590px] w-[292px] h-[292px]" />
+      <div class="relative lg:absolute lg:top-1/2 lg:-translate-y-1/2 lg:left-[156px] flex flex-col gap-6 lg:gap-[24px] w-full lg:w-[489px] px-6 py-12 lg:px-0 lg:py-0">
+        <div class="flex flex-col gap-3 lg:gap-[12px] text-beige">
+          <p class="font-extrabold text-[32px] lg:text-[48px]">Don't be shy, say hi!</p>
+          <p class="font-normal text-[16px]">You can contact me through e-mail or my social media below:</p>
+        </div>
+        <div class="flex gap-[12px] items-center flex-wrap">
+          <a href="mailto:gabrielasbiscaro@gmail.com" class="backdrop-blur-sm bg-white/10 border border-white/40 rounded-[96px] px-[10px] py-[10px] font-bold text-[16px] text-beige underline whitespace-nowrap">gabrielasbiscaro@gmail.com</a>
+          <a href="https://www.instagram.com/gabiscaroo_/" target="_blank" class="backdrop-blur-sm bg-white/10 border border-white/40 rounded-[96px] px-[10px] py-[10px] font-bold text-[16px] text-beige underline">Instagram</a>
+          <a href="https://www.linkedin.com/in/gabriela-bisc%C3%A1ro/" target="_blank" class="backdrop-blur-sm bg-white/10 border border-white/40 rounded-[96px] px-[10px] py-[10px] font-bold text-[16px] text-beige underline">LinkedIn</a>
+        </div>
+      </div>
+    </footer>
+
+  </div>
+</Layout>
+
+<script>
+  const toggle = document.getElementById('nav-toggle');
+  const menu = document.getElementById('mobile-menu');
+  const close = document.getElementById('nav-close');
+  toggle?.addEventListener('click', () => { menu?.classList.remove('hidden'); menu?.classList.add('flex'); });
+  close?.addEventListener('click', () => { menu?.classList.add('hidden'); menu?.classList.remove('flex'); });
+</script>

@@ -1,0 +1,194 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { getCollection } from 'astro:content';
+
+const items = (await getCollection('personalWork')).sort((a, b) => a.data.order - b.data.order);
+const firstItem = items[0];
+const restItems = items.slice(1);
+
+// Group restItems into rows of 2
+const rows: (typeof restItems)[] = [];
+for (let i = 0; i < restItems.length; i += 2) {
+  rows.push(restItems.slice(i, i + 2));
+}
+const rowWidths = [
+  ['570px', '570px'],
+  ['688px', '454px'],
+];
+---
+
+<Layout title="Personal Work — Gabriela Biscáro">
+  <div class="w-full overflow-x-hidden">
+
+    <!-- Hero -->
+    <div class="relative w-full h-[300px] lg:h-[700px]">
+      <div
+        class="absolute inset-0 bg-navy"
+        style="mask-image: url('/images/Hero-Mask.png'); mask-size: cover; mask-repeat: no-repeat; -webkit-mask-image: url('/images/Hero-Mask.png'); -webkit-mask-size: cover; -webkit-mask-repeat: no-repeat;"
+      ></div>
+      <nav class="relative z-10 flex items-center justify-between px-6 pt-6 lg:px-[141px] lg:pt-[35px]">
+        <a href="/"><img src="/images/logo.svg" alt="Logo" style="width:40px;height:49px;object-fit:contain;" /></a>
+        <div class="hidden lg:flex gap-[38px] items-center">
+          <a href="/work" class="font-bold text-[16px] text-pink uppercase">Work</a>
+          <div class="flex flex-col items-start">
+            <a href="/personal-work" class="font-bold text-[16px] text-pink uppercase">Personal Work</a>
+            <img src="/images/wave-personalwork.svg" alt="" class="mt-1 w-full" />
+          </div>
+          <a href="/about" class="font-bold text-[16px] text-pink uppercase">About</a>
+        </div>
+        <button id="nav-toggle" class="lg:hidden text-pink p-2" aria-label="Open menu">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+            <line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/>
+          </svg>
+        </button>
+      </nav>
+    </div>
+
+    <!-- Mobile menu -->
+    <div id="mobile-menu" class="hidden fixed inset-0 z-50 bg-bordoux flex-col items-center justify-center gap-10">
+      <button id="nav-close" class="absolute top-6 right-6 text-beige text-[32px] leading-none font-bold">✕</button>
+      <a href="/work" class="font-bold text-[24px] text-beige uppercase">Work</a>
+      <a href="/personal-work" class="font-bold text-[24px] text-beige uppercase">Personal Work</a>
+      <a href="/about" class="font-bold text-[24px] text-beige uppercase">About</a>
+    </div>
+
+    <!-- Mobile: intro + all images stacked -->
+    <div class="lg:hidden px-6 py-10 flex flex-col gap-6">
+      <div class="flex flex-col gap-4">
+        <img src="/images/Flor-Rosa-PersonalWork.svg" alt="" style="width: 72px; height: 72px;" />
+        <p class="font-extrabold text-[28px] text-bordoux leading-tight">I love saturated and contrasting colors and organic forms.</p>
+      </div>
+      {items.map((item) => (
+        <button
+          class="lightbox-trigger w-full h-[280px] rounded-[12px] overflow-hidden block"
+          data-src={item.data.image}
+          data-alt={item.data.alt ?? ''}
+          style="padding: 0; border: none; background: none; cursor: pointer;"
+        >
+          <img
+            src={item.data.image}
+            alt={item.data.alt ?? ''}
+            style="width: 100%; height: 100%; object-fit: cover; display: block;"
+          />
+        </button>
+      ))}
+    </div>
+
+    <!-- Desktop: intro + first image -->
+    <div class="hidden lg:grid" style="padding: 79px 141px 16px; grid-template-columns: 454px 688px; gap: 16px; align-items: start;">
+      <div style="display: flex; flex-direction: column; gap: 24px;">
+        <img src="/images/Flor-Rosa-PersonalWork.svg" alt="" style="width: 96px; height: 96px;" />
+        <p class="font-extrabold text-[48px] text-bordoux leading-tight">I love saturated and contrasting colors and organic forms.</p>
+      </div>
+      {firstItem && (
+        <button
+          class="lightbox-trigger"
+          data-src={firstItem.data.image}
+          data-alt={firstItem.data.alt ?? ''}
+          style="display: block; width: 688px; height: 570px; border-radius: 12px; overflow: hidden; padding: 0; border: none; background: none; cursor: pointer;"
+        >
+          <img
+            src={firstItem.data.image}
+            alt={firstItem.data.alt ?? ''}
+            style="width: 100%; height: 100%; object-fit: cover; display: block;"
+          />
+        </button>
+      )}
+    </div>
+
+    <!-- Desktop: remaining images grid -->
+    {rows.length > 0 && (
+      <div class="hidden lg:flex flex-col" style="padding: 0 141px 79px; gap: 16px;">
+        {rows.map((row, rowIndex) => {
+          const widths = rowWidths[rowIndex % 2];
+          return (
+            <div style="display: flex; gap: 16px;">
+              {row.map((item, i) => (
+                <button
+                  class="lightbox-trigger"
+                  data-src={item.data.image}
+                  data-alt={item.data.alt ?? ''}
+                  style={`display: block; width: ${widths[i]}; height: 570px; flex-shrink: 0; border-radius: 12px; overflow: hidden; padding: 0; border: none; background: none; cursor: pointer;`}
+                >
+                  <img
+                    src={item.data.image}
+                    alt={item.data.alt ?? ''}
+                    style="width: 100%; height: 100%; object-fit: cover; display: block;"
+                  />
+                </button>
+              ))}
+            </div>
+          );
+        })}
+      </div>
+    )}
+
+    <!-- Footer -->
+    <footer class="relative w-full overflow-hidden mt-12 lg:mt-[79px] lg:h-[968px]">
+      <img src="/images/footer-background.png" alt="" class="absolute inset-0 w-full h-full object-cover" />
+      <img src="/images/arco.svg" alt="" class="hidden lg:block absolute top-[74px] left-[200px] w-[175px] h-[172px] -rotate-[165deg]" />
+      <img src="/images/arco.svg" alt="" class="hidden lg:block absolute top-[535px] left-[600px] w-[175px] h-[172px]" />
+      <img src="/images/Flor-Rosa.svg" alt="" class="hidden lg:block absolute top-[473px] left-0 w-[308px] h-[308px] -scale-y-100" />
+      <img src="/images/Flor-Vermelha.svg" alt="" class="hidden lg:block absolute top-[-154px] left-[564px] w-[308px] h-[308px]" />
+      <img src="/images/Flor-Roxa.svg" alt="" class="hidden lg:block absolute top-[664px] left-[1063px] w-[218px] h-[162px]" />
+      <img src="/images/Estrelinha-vermelha.svg" alt="" class="hidden lg:block absolute top-[454px] left-[791px] w-[213px] h-[230px] rotate-[-16.12deg]" />
+      <img src="/images/Estrelinha-amarela.svg" alt="" class="hidden lg:block absolute top-[20px] left-[1190px] w-[213px] h-[230px] rotate-[-16.12deg]" />
+      <img src="/images/Bonequinho-azul.svg" alt="" class="hidden lg:block absolute top-[233px] left-[907px] w-[361px] h-[327px]" />
+      <img src="/images/Bonequinho-verde.svg" alt="" class="hidden lg:block absolute top-[824px] left-[590px] w-[292px] h-[292px]" />
+      <div class="relative lg:absolute lg:top-1/2 lg:-translate-y-1/2 lg:left-[156px] flex flex-col gap-6 lg:gap-[24px] w-full lg:w-[489px] px-6 py-12 lg:px-0 lg:py-0">
+        <div class="flex flex-col gap-3 lg:gap-[12px] text-beige">
+          <p class="font-extrabold text-[32px] lg:text-[48px]">Don't be shy, say hi!</p>
+          <p class="font-normal text-[16px]">You can contact me through e-mail or my social media below:</p>
+        </div>
+        <div class="flex gap-[12px] items-center flex-wrap">
+          <a href="mailto:gabrielasbiscaro@gmail.com" class="backdrop-blur-sm bg-white/10 border border-white/40 rounded-[96px] px-[10px] py-[10px] font-bold text-[16px] text-beige underline whitespace-nowrap">gabrielasbiscaro@gmail.com</a>
+          <a href="https://www.instagram.com/gabiscaroo_/" target="_blank" class="backdrop-blur-sm bg-white/10 border border-white/40 rounded-[96px] px-[10px] py-[10px] font-bold text-[16px] text-beige underline">Instagram</a>
+          <a href="https://www.linkedin.com/in/gabriela-bisc%C3%A1ro/" target="_blank" class="backdrop-blur-sm bg-white/10 border border-white/40 rounded-[96px] px-[10px] py-[10px] font-bold text-[16px] text-beige underline">LinkedIn</a>
+        </div>
+      </div>
+    </footer>
+
+  </div>
+
+  <!-- Lightbox modal -->
+  <div
+    id="lightbox"
+    style="display: none; position: fixed; inset: 0; z-index: 50; align-items: center; justify-content: center; background: rgba(0,0,0,0.85);"
+    role="dialog"
+    aria-modal="true"
+  >
+    <button id="lightbox-close" style="position: absolute; top: 24px; right: 32px; color: #faf7ef; font-size: 32px; line-height: 1; font-weight: bold; background: none; border: none; cursor: pointer;" aria-label="Close">&times;</button>
+    <img id="lightbox-img" src="" alt="" style="max-width: 90vw; max-height: 90vh; object-fit: contain; border-radius: 12px;" />
+  </div>
+</Layout>
+
+<script>
+  const toggle = document.getElementById('nav-toggle');
+  const menu = document.getElementById('mobile-menu');
+  const close = document.getElementById('nav-close');
+  toggle?.addEventListener('click', () => { menu?.classList.remove('hidden'); menu?.classList.add('flex'); });
+  close?.addEventListener('click', () => { menu?.classList.add('hidden'); menu?.classList.remove('flex'); });
+
+  const triggers = document.querySelectorAll<HTMLButtonElement>('.lightbox-trigger');
+  const lightbox = document.getElementById('lightbox') as HTMLElement;
+  const lightboxImg = document.getElementById('lightbox-img') as HTMLImageElement;
+  const closeBtn = document.getElementById('lightbox-close')!;
+
+  function openLightbox(src: string, alt: string) {
+    lightboxImg.src = src;
+    lightboxImg.alt = alt;
+    lightbox.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+  }
+  function closeLightbox() {
+    lightbox.style.display = 'none';
+    document.body.style.overflow = '';
+  }
+
+  triggers.forEach((btn) => {
+    btn.addEventListener('click', () => openLightbox(btn.dataset.src ?? '', btn.dataset.alt ?? ''));
+  });
+  closeBtn.addEventListener('click', closeLightbox);
+  lightbox.addEventListener('click', (e) => { if (e.target === lightbox) closeLightbox(); });
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeLightbox(); });
+</script>

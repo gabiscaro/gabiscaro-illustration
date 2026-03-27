@@ -1,0 +1,14 @@
+@import "tailwindcss";
+@source "../**/*.astro";
+@source "../**/*.ts";
+@source "../**/*.tsx";
+
+@theme {
+  --color-beige: #faf7ef;
+  --color-pink: #f992d3;
+  --color-bordoux: #400039;
+  --color-navy: #263742;
+  --color-gray: #4f4f4f;
+
+  --font-rubik: 'Rubik', sans-serif;
+}

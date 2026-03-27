@@ -1,0 +1,172 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { getCollection, render } from 'astro:content';
+
+export async function getStaticPaths() {
+  const projects = await getCollection('projects');
+  return projects.map((project) => ({
+    params: { id: project.id },
+    props: { project, allProjects: projects },
+  }));
+}
+
+const { project, allProjects } = Astro.props;
+const { Content } = await render(project);
+
+const others = allProjects
+  .filter((p) => p.id !== project.id)
+  .sort((a, b) => a.data.order - b.data.order)
+  .slice(0, 3);
+
+const imgLogo = "/images/logo.svg";
+const imgWave = "https://www.figma.com/api/mcp/asset/1c2ed13f-3f9c-4480-93de-16f3458bdc0e";
+---
+
+<Layout title={`${project.data.title} — Gabriela Biscáro`}>
+  <div class="w-full overflow-x-hidden">
+
+    <!-- Hero -->
+    <div class="relative w-full h-[300px] lg:h-[700px]" style={`background-color: ${project.data.heroBackground ?? '#faf7ef'};`}>
+      <img
+        src={project.data.thumbnail}
+        alt={project.data.title}
+        class="absolute inset-0 w-full h-full object-contain"
+      />
+      <div class="absolute top-0 left-0 w-full h-[268px] z-10" style="background: linear-gradient(to bottom, #400039, transparent);"></div>
+      <nav class="absolute top-0 left-0 w-full z-20 flex items-center justify-between px-6 pt-6 lg:px-[141px] lg:pt-[35px]">
+        <a href="/"><img src={imgLogo} alt="Logo" style="width:40px;height:49px;object-fit:contain;" /></a>
+        <div class="hidden lg:flex gap-[38px] items-center">
+          <div class="flex flex-col items-start">
+            <a href="/work" class="font-bold text-[16px] text-pink uppercase">Work</a>
+            <img src="/images/wave-work.svg" alt="" class="mt-1 w-full" />
+          </div>
+          <a href="/personal-work" class="font-bold text-[16px] text-pink uppercase">Personal Work</a>
+          <a href="/about" class="font-bold text-[16px] text-pink uppercase">About</a>
+        </div>
+        <button id="nav-toggle" class="lg:hidden text-pink p-2" aria-label="Open menu">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+            <line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/>
+          </svg>
+        </button>
+      </nav>
+    </div>
+
+    <!-- Mobile menu -->
+    <div id="mobile-menu" class="hidden fixed inset-0 z-50 bg-bordoux flex-col items-center justify-center gap-10">
+      <button id="nav-close" class="absolute top-6 right-6 text-beige text-[32px] leading-none font-bold">✕</button>
+      <a href="/work" class="font-bold text-[24px] text-beige uppercase">Work</a>
+      <a href="/personal-work" class="font-bold text-[24px] text-beige uppercase">Personal Work</a>
+      <a href="/about" class="font-bold text-[24px] text-beige uppercase">About</a>
+    </div>
+
+    <!-- Project info -->
+    <div class="px-6 pt-10 pb-8 lg:px-[141px] lg:pt-[124px] lg:pb-[79px]">
+      <div class="flex flex-col gap-[24px] lg:max-w-[688px]">
+        <div class="flex flex-col gap-[8px]">
+          <h1 class="font-extrabold text-[32px] lg:text-[48px] text-bordoux leading-tight">{project.data.title}</h1>
+          {project.data.type && (
+            <p class="font-normal text-[16px] text-gray">{project.data.type}</p>
+          )}
+        </div>
+        <div class="font-normal text-[16px] text-gray leading-relaxed prose prose-p:mb-4">
+          <Content />
+        </div>
+      </div>
+    </div>
+
+    <!-- Gallery image -->
+    {project.data.galleryImage && (
+      <div class="px-6 mb-8 lg:px-[141px] lg:mb-[79px]">
+        <img
+          src={project.data.galleryImage}
+          alt="Gallery"
+          class="w-full h-[220px] lg:w-[1158px] lg:h-[672px] object-cover rounded-[12px]"
+        />
+      </div>
+    )}
+
+    <!-- Process section -->
+    {(project.data.processTitle || project.data.processDescription || project.data.processImage) && (
+      <div class="flex flex-col">
+        {(project.data.processTitle || project.data.processDescription) && (
+          <div class="px-6 pb-8 lg:px-[141px] lg:pb-[79px]">
+            <div class="flex flex-col gap-[24px] lg:max-w-[688px]">
+              {project.data.processTitle && (
+                <h2 class="font-extrabold text-[24px] lg:text-[32px] text-bordoux">{project.data.processTitle}</h2>
+              )}
+              {project.data.processDescription && (
+                <p class="font-normal text-[16px] text-gray leading-relaxed">{project.data.processDescription}</p>
+              )}
+            </div>
+          </div>
+        )}
+        {project.data.processImage && (
+          <div class="px-6 mb-8 lg:px-[141px] lg:mb-[79px]">
+            <img
+              src={project.data.processImage}
+              alt="The process"
+              class="w-full h-[220px] lg:w-[1158px] lg:h-[672px] object-cover rounded-[12px]"
+            />
+          </div>
+        )}
+      </div>
+    )}
+
+    <!-- More featured work -->
+    {others.length > 0 && (
+      <div class="px-6 py-10 lg:px-[141px] lg:py-[79px] flex flex-col gap-8 lg:gap-[40px]">
+        <div class="flex flex-col items-center gap-[16px]">
+          <img src={imgWave} alt="" class="h-[18px] w-auto" />
+          <h2 class="font-extrabold text-[24px] lg:text-[32px] text-bordoux">More featured work</h2>
+        </div>
+        <div class="flex flex-col gap-4 lg:flex-row lg:gap-[16px]">
+          {others.map((p) => (
+            <div class="flex flex-col gap-[12px]">
+              <a href={`/work/${p.id}`} class="group relative rounded-[12px] overflow-hidden block w-full h-[200px] lg:w-[370px] lg:h-[370px] shrink-0">
+                <img src={p.data.thumbnail} alt={p.data.title} class="absolute inset-0 w-full h-full object-cover" />
+                <div class="absolute inset-0 bg-pink mix-blend-multiply opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+              </a>
+              <a href={`/work/${p.id}`} class="flex items-center gap-[8px] font-normal text-[16px] underline" style="color: #D604C1;">
+                <span>• {p.data.title} •</span>
+              </a>
+            </div>
+          ))}
+        </div>
+      </div>
+    )}
+
+    <!-- Footer -->
+    <footer class="relative w-full overflow-hidden mt-0 lg:mt-[79px] lg:h-[968px]">
+      <img src="/images/footer-background.png" alt="" class="absolute inset-0 w-full h-full object-cover" />
+      <img src="/images/arco.svg" alt="" class="hidden lg:block absolute top-[74px] left-[200px] w-[175px] h-[172px] -rotate-[165deg]" />
+      <img src="/images/arco.svg" alt="" class="hidden lg:block absolute top-[535px] left-[600px] w-[175px] h-[172px]" />
+      <img src="/images/Flor-Rosa.svg" alt="" class="hidden lg:block absolute top-[473px] left-0 w-[308px] h-[308px] -scale-y-100" />
+      <img src="/images/Flor-Vermelha.svg" alt="" class="hidden lg:block absolute top-[-154px] left-[564px] w-[308px] h-[308px]" />
+      <img src="/images/Flor-Roxa.svg" alt="" class="hidden lg:block absolute top-[664px] left-[1063px] w-[218px] h-[162px]" />
+      <img src="/images/Estrelinha-vermelha.svg" alt="" class="hidden lg:block absolute top-[454px] left-[791px] w-[213px] h-[230px] rotate-[-16.12deg]" />
+      <img src="/images/Estrelinha-amarela.svg" alt="" class="hidden lg:block absolute top-[20px] left-[1190px] w-[213px] h-[230px] rotate-[-16.12deg]" />
+      <img src="/images/Bonequinho-azul.svg" alt="" class="hidden lg:block absolute top-[233px] left-[907px] w-[361px] h-[327px]" />
+      <img src="/images/Bonequinho-verde.svg" alt="" class="hidden lg:block absolute top-[824px] left-[590px] w-[292px] h-[292px]" />
+      <div class="relative lg:absolute lg:top-1/2 lg:-translate-y-1/2 lg:left-[156px] flex flex-col gap-6 lg:gap-[24px] w-full lg:w-[489px] px-6 py-12 lg:px-0 lg:py-0">
+        <div class="flex flex-col gap-3 lg:gap-[12px] text-beige">
+          <p class="font-extrabold text-[32px] lg:text-[48px]">Don't be shy, say hi!</p>
+          <p class="font-normal text-[16px]">You can contact me through e-mail or my social media below:</p>
+        </div>
+        <div class="flex gap-[12px] items-center flex-wrap">
+          <a href="mailto:gabrielasbiscaro@gmail.com" class="backdrop-blur-sm bg-white/10 border border-white/40 rounded-[96px] px-[10px] py-[10px] font-bold text-[16px] text-beige underline whitespace-nowrap">gabrielasbiscaro@gmail.com</a>
+          <a href="https://www.instagram.com/gabiscaroo_/" target="_blank" class="backdrop-blur-sm bg-white/10 border border-white/40 rounded-[96px] px-[10px] py-[10px] font-bold text-[16px] text-beige underline">Instagram</a>
+          <a href="https://www.linkedin.com/in/gabriela-bisc%C3%A1ro/" target="_blank" class="backdrop-blur-sm bg-white/10 border border-white/40 rounded-[96px] px-[10px] py-[10px] font-bold text-[16px] text-beige underline">LinkedIn</a>
+        </div>
+      </div>
+    </footer>
+
+  </div>
+</Layout>
+
+<script>
+  const toggle = document.getElementById('nav-toggle');
+  const menu = document.getElementById('mobile-menu');
+  const close = document.getElementById('nav-close');
+  toggle?.addEventListener('click', () => { menu?.classList.remove('hidden'); menu?.classList.add('flex'); });
+  close?.addEventListener('click', () => { menu?.classList.add('hidden'); menu?.classList.remove('flex'); });
+</script>
