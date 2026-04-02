@@ -14,7 +14,7 @@ const devIntegrations = isDev
 
 // https://astro.build/config
 export default defineConfig({
-  base: '/illustration',
+  base: isDev ? '/' : '/illustration',
   integrations: devIntegrations,
   vite: {
     plugins: [tailwindcss()]
