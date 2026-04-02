@@ -12,9 +12,13 @@ const devIntegrations = isDev
     ])
   : [];
 
+// BASE_PATH env var is set in CI (GitHub Actions) to match the repo name
+// For GoDaddy manual deploy, build without BASE_PATH (defaults to /illustration)
+const base = isDev ? '/' : (process.env.BASE_PATH ?? '/illustration');
+
 // https://astro.build/config
 export default defineConfig({
-  base: isDev ? '/' : '/illustration',
+  base,
   integrations: devIntegrations,
   vite: {
     plugins: [tailwindcss()]
