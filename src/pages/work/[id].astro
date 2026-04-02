@@ -33,7 +33,7 @@ const imgWave = "https://www.figma.com/api/mcp/asset/1c2ed13f-3f9c-4480-93de-16f
         class="absolute inset-0 w-full h-full object-contain"
       />
       <div class="absolute top-0 left-0 w-full h-[268px] z-10" style="background: linear-gradient(to bottom, #400039, transparent);"></div>
-      <nav class="absolute top-0 left-0 w-full z-20 flex items-center justify-between px-6 pt-6 lg:px-[141px] lg:pt-[35px]">
+      <nav class="absolute top-0 left-0 right-0 z-20 max-w-[1440px] mx-auto flex items-center justify-between px-6 pt-6 lg:px-[141px] lg:pt-[35px]">
         <a href="/"><img src={imgLogo} alt="Logo" style="width:40px;height:49px;object-fit:contain;" /></a>
         <div class="hidden lg:flex gap-[38px] items-center">
           <div class="flex flex-col items-start">
@@ -59,6 +59,7 @@ const imgWave = "https://www.figma.com/api/mcp/asset/1c2ed13f-3f9c-4480-93de-16f
       <a href="/about" class="font-bold text-[24px] text-beige uppercase">About</a>
     </div>
 
+    <div class="max-w-[1440px] mx-auto">
     <!-- Project info -->
     <div class="px-6 pt-10 pb-8 lg:px-[141px] lg:pt-[124px] lg:pb-[79px]">
       <div class="flex flex-col gap-[24px] lg:max-w-[688px]">
@@ -135,27 +136,31 @@ const imgWave = "https://www.figma.com/api/mcp/asset/1c2ed13f-3f9c-4480-93de-16f
       </div>
     )}
 
+    </div><!-- end max-w content -->
+
     <!-- Footer -->
     <footer class="relative w-full overflow-hidden mt-0 lg:mt-[79px] lg:h-[968px]">
       <img src="/images/footer-background.png" alt="" class="absolute inset-0 w-full h-full object-cover" />
-      <img src="/images/arco.svg" alt="" class="hidden lg:block absolute top-[74px] left-[200px] w-[175px] h-[172px] -rotate-[165deg]" />
-      <img src="/images/arco.svg" alt="" class="hidden lg:block absolute top-[535px] left-[600px] w-[175px] h-[172px]" />
-      <img src="/images/Flor-Rosa.svg" alt="" class="hidden lg:block absolute top-[473px] left-0 w-[308px] h-[308px] -scale-y-100" />
-      <img src="/images/Flor-Vermelha.svg" alt="" class="hidden lg:block absolute top-[-154px] left-[564px] w-[308px] h-[308px]" />
-      <img src="/images/Flor-Roxa.svg" alt="" class="hidden lg:block absolute top-[664px] left-[1063px] w-[218px] h-[162px]" />
-      <img src="/images/Estrelinha-vermelha.svg" alt="" class="hidden lg:block absolute top-[454px] left-[791px] w-[213px] h-[230px] rotate-[-16.12deg]" />
-      <img src="/images/Estrelinha-amarela.svg" alt="" class="hidden lg:block absolute top-[20px] left-[1190px] w-[213px] h-[230px] rotate-[-16.12deg]" />
-      <img src="/images/Bonequinho-azul.svg" alt="" class="hidden lg:block absolute top-[233px] left-[907px] w-[361px] h-[327px]" />
-      <img src="/images/Bonequinho-verde.svg" alt="" class="hidden lg:block absolute top-[824px] left-[590px] w-[292px] h-[292px]" />
-      <div class="relative lg:absolute lg:top-1/2 lg:-translate-y-1/2 lg:left-[156px] flex flex-col gap-6 lg:gap-[24px] w-full lg:w-[489px] px-6 py-12 lg:px-0 lg:py-0">
-        <div class="flex flex-col gap-3 lg:gap-[12px] text-beige">
-          <p class="font-extrabold text-[32px] lg:text-[48px]">Don't be shy, say hi!</p>
-          <p class="font-normal text-[16px]">You can contact me through e-mail or my social media below:</p>
-        </div>
-        <div class="flex gap-[12px] items-center flex-wrap">
-          <a href="mailto:gabrielasbiscaro@gmail.com" class="backdrop-blur-sm bg-white/10 border border-white/40 rounded-[96px] px-[10px] py-[10px] font-bold text-[16px] text-beige underline whitespace-nowrap">gabrielasbiscaro@gmail.com</a>
-          <a href="https://www.instagram.com/gabiscaroo_/" target="_blank" class="backdrop-blur-sm bg-white/10 border border-white/40 rounded-[96px] px-[10px] py-[10px] font-bold text-[16px] text-beige underline">Instagram</a>
-          <a href="https://www.linkedin.com/in/gabriela-bisc%C3%A1ro/" target="_blank" class="backdrop-blur-sm bg-white/10 border border-white/40 rounded-[96px] px-[10px] py-[10px] font-bold text-[16px] text-beige underline">LinkedIn</a>
+      <div class="relative max-w-[1440px] mx-auto h-full">
+        <img src="/images/arco.svg" alt="" class="hidden lg:block absolute top-[74px] left-[200px] w-[175px] h-[172px] -rotate-[165deg]" />
+        <img src="/images/arco.svg" alt="" class="hidden lg:block absolute top-[535px] left-[600px] w-[175px] h-[172px]" />
+        <img src="/images/Flor-Rosa.svg" alt="" class="hidden lg:block absolute top-[473px] left-0 w-[308px] h-[308px] -scale-y-100" />
+        <img src="/images/Flor-Vermelha.svg" alt="" class="hidden lg:block absolute top-[-154px] left-[564px] w-[308px] h-[308px]" />
+        <img src="/images/Flor-Roxa.svg" alt="" class="hidden lg:block absolute top-[664px] left-[1063px] w-[218px] h-[162px]" />
+        <img src="/images/Estrelinha-vermelha.svg" alt="" class="hidden lg:block absolute top-[454px] left-[791px] w-[213px] h-[230px] rotate-[-16.12deg]" />
+        <img src="/images/Estrelinha-amarela.svg" alt="" class="hidden lg:block absolute top-[20px] left-[1190px] w-[213px] h-[230px] rotate-[-16.12deg]" />
+        <img src="/images/Bonequinho-azul.svg" alt="" class="hidden lg:block absolute top-[233px] left-[907px] w-[361px] h-[327px]" />
+        <img src="/images/Bonequinho-verde.svg" alt="" class="hidden lg:block absolute top-[824px] left-[590px] w-[292px] h-[292px]" />
+        <div class="relative lg:absolute lg:top-1/2 lg:-translate-y-1/2 lg:left-[156px] flex flex-col gap-6 lg:gap-[24px] w-full lg:w-[489px] px-6 py-12 lg:px-0 lg:py-0">
+          <div class="flex flex-col gap-3 lg:gap-[12px] text-beige">
+            <p class="font-extrabold text-[32px] lg:text-[48px]">Don't be shy, say hi!</p>
+            <p class="font-normal text-[16px]">You can contact me through e-mail or my social media below:</p>
+          </div>
+          <div class="flex gap-[12px] items-center flex-wrap">
+            <a href="mailto:gabrielasbiscaro@gmail.com" class="backdrop-blur-sm bg-white/10 border border-white/40 rounded-[96px] px-[10px] py-[10px] font-bold text-[16px] text-beige underline whitespace-nowrap">gabrielasbiscaro@gmail.com</a>
+            <a href="https://www.instagram.com/gabiscaroo_/" target="_blank" class="backdrop-blur-sm bg-white/10 border border-white/40 rounded-[96px] px-[10px] py-[10px] font-bold text-[16px] text-beige underline">Instagram</a>
+            <a href="https://www.linkedin.com/in/gabriela-bisc%C3%A1ro/" target="_blank" class="backdrop-blur-sm bg-white/10 border border-white/40 rounded-[96px] px-[10px] py-[10px] font-bold text-[16px] text-beige underline">LinkedIn</a>
+          </div>
         </div>
       </div>
     </footer>
