@@ -94,6 +94,8 @@ const rowWidths = [
           class="lightbox-trigger"
           data-src={firstItem.data.image}
           data-alt={firstItem.data.alt ?? ''}
+          data-thumb-width="688"
+          data-thumb-height="570"
           style="display: block; width: 688px; height: 570px; border-radius: 12px; overflow: hidden; padding: 0; border: none; background: none; cursor: pointer;"
         >
           <img
@@ -117,6 +119,8 @@ const rowWidths = [
                   class="lightbox-trigger"
                   data-src={item.data.image}
                   data-alt={item.data.alt ?? ''}
+                  data-thumb-width={widths[i].replace('px', '')}
+                  data-thumb-height="570"
                   style={`display: block; width: ${widths[i]}; height: 570px; flex-shrink: 0; border-radius: 12px; overflow: hidden; padding: 0; border: none; background: none; cursor: pointer;`}
                 >
                   <img
@@ -171,7 +175,9 @@ const rowWidths = [
     aria-modal="true"
   >
     <button id="lightbox-close" style="position: absolute; top: 24px; right: 32px; color: #faf7ef; font-size: 32px; line-height: 1; font-weight: bold; background: none; border: none; cursor: pointer;" aria-label="Close">&times;</button>
-    <img id="lightbox-img" src="" alt="" style="max-width: 90vw; max-height: 90vh; object-fit: contain; border-radius: 12px;" />
+    <div id="lightbox-container" style="border-radius: 12px; overflow: hidden; flex-shrink: 0;">
+      <img id="lightbox-img" src="" alt="" style="width: 100%; height: 100%; object-fit: cover; display: block;" />
+    </div>
   </div>
 </Layout>
 
@@ -184,12 +190,34 @@ const rowWidths = [
 
   const triggers = document.querySelectorAll<HTMLButtonElement>('.lightbox-trigger');
   const lightbox = document.getElementById('lightbox') as HTMLElement;
+  const lightboxContainer = document.getElementById('lightbox-container') as HTMLElement;
   const lightboxImg = document.getElementById('lightbox-img') as HTMLImageElement;
   const closeBtn = document.getElementById('lightbox-close')!;
 
-  function openLightbox(src: string, alt: string) {
+  function openLightbox(src: string, alt: string, thumbWidth: number | null, thumbHeight: number | null) {
     lightboxImg.src = src;
     lightboxImg.alt = alt;
+    if (thumbWidth && thumbHeight) {
+      const ratio = thumbWidth / thumbHeight;
+      const maxW = window.innerWidth * 0.85;
+      const maxH = window.innerHeight * 0.85;
+      let w: number, h: number;
+      if (ratio >= 1) {
+        w = Math.min(maxW, maxH * ratio);
+        h = w / ratio;
+      } else {
+        h = Math.min(maxH, maxW / ratio);
+        w = h * ratio;
+      }
+      lightboxContainer.style.width = `${w}px`;
+      lightboxContainer.style.height = `${h}px`;
+    } else {
+      lightboxContainer.style.width = 'auto';
+      lightboxContainer.style.height = 'auto';
+      lightboxImg.style.maxWidth = '90vw';
+      lightboxImg.style.maxHeight = '90vh';
+      lightboxImg.style.objectFit = 'contain';
+    }
     lightbox.style.display = 'flex';
     document.body.style.overflow = 'hidden';
   }
@@ -199,7 +227,9 @@ const rowWidths = [
   }
 
   triggers.forEach((btn) => {
-    btn.addEventListener('click', () => openLightbox(btn.dataset.src ?? '', btn.dataset.alt ?? ''));
+    const w = btn.dataset.thumbWidth ? parseInt(btn.dataset.thumbWidth) : null;
+    const h = btn.dataset.thumbHeight ? parseInt(btn.dataset.thumbHeight) : null;
+    btn.addEventListener('click', () => openLightbox(btn.dataset.src ?? '', btn.dataset.alt ?? '', w, h));
   });
   closeBtn.addEventListener('click', closeLightbox);
   lightbox.addEventListener('click', (e) => { if (e.target === lightbox) closeLightbox(); });

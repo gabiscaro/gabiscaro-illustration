@@ -22,10 +22,12 @@ const imgFlorRosa = "/images/Flor-Vermelha-Pequena.svg";
 
     <!-- Hero -->
     <div class="relative w-full h-[300px] lg:h-[700px]">
-      {heroImage
-        ? <img src={heroImage} alt="" class="absolute inset-0 w-full h-full object-cover" style={`mask-image: url('${imgHeroMask}'); mask-size: cover; mask-repeat: no-repeat; -webkit-mask-image: url('${imgHeroMask}'); -webkit-mask-size: cover; -webkit-mask-repeat: no-repeat;`} />
-        : <div class="absolute inset-0 bg-navy" style={`mask-image: url('${imgHeroMask}'); mask-size: cover; mask-repeat: no-repeat; -webkit-mask-image: url('${imgHeroMask}'); -webkit-mask-size: cover; -webkit-mask-repeat: no-repeat;`}></div>
-      }
+      <!-- Background color always visible (shows through transparent PNGs) -->
+      <div class="absolute inset-0" style={`background-color: #f1e6b7; mask-image: url('${imgHeroMask}'); mask-size: cover; mask-repeat: no-repeat; -webkit-mask-image: url('${imgHeroMask}'); -webkit-mask-size: cover; -webkit-mask-repeat: no-repeat;`}></div>
+      <!-- Hero image layered on top (transparent areas reveal the background) -->
+      {heroImage && (
+        <img src={heroImage} alt="" class="absolute inset-0 w-full h-full object-cover" style={`mask-image: url('${imgHeroMask}'); mask-size: cover; mask-repeat: no-repeat; -webkit-mask-image: url('${imgHeroMask}'); -webkit-mask-size: cover; -webkit-mask-repeat: no-repeat;`} />
+      )}
       <div class="max-w-[1440px] mx-auto">
         <nav class="relative z-10 flex items-center justify-between px-6 pt-6 lg:px-[141px] lg:pt-[35px]">
           <a href="/"><img src={imgLogo} alt="Logo" style="width:40px;height:49px;object-fit:contain;" /></a>

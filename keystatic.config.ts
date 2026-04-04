@@ -11,8 +11,8 @@ export default config({
       schema: {
         heroImage: fields.image({
           label: 'Hero Image',
-          directory: 'public/images/pages',
-          publicPath: '/images/pages/',
+          directory: 'public/images/pages/work',
+          publicPath: '/images/pages/work/',
         }),
       },
     }),
@@ -22,8 +22,8 @@ export default config({
       schema: {
         heroImage: fields.image({
           label: 'Hero Image',
-          directory: 'public/images/pages',
-          publicPath: '/images/pages/',
+          directory: 'public/images/pages/personal-work',
+          publicPath: '/images/pages/personal-work/',
         }),
       },
     }),
@@ -34,6 +34,7 @@ export default config({
       slugField: 'title',
       path: 'src/content/projects/*',
       format: { contentField: 'content' },
+      entryLayout: 'content',
       schema: {
         title: fields.slug({ name: { label: 'Title' } }),
         thumbnail: fields.image({
@@ -78,7 +79,6 @@ export default config({
       label: 'Personal Work',
       slugField: 'title',
       path: 'src/content/personal-work/*',
-      format: { contentField: 'content' },
       schema: {
         title: fields.slug({ name: { label: 'Title' } }),
         image: fields.image({
@@ -88,7 +88,6 @@ export default config({
         }),
         alt: fields.text({ label: 'Alt text' }),
         order: fields.number({ label: 'Order', validation: { isRequired: true } }),
-        content: fields.markdoc({ label: 'Content (optional)' }),
       },
     }),
   },
